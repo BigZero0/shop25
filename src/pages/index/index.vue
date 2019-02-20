@@ -72,10 +72,14 @@ export default{
   }
 }
 </script>
-<style>
+
+<style lang="scss">
   .search{
     background-color: #eb4450;
     padding: 20rpx 16rpx;
+    &-input{
+      background-color: #333;
+    }
   }
   .search-input{
     height: 60rpx;
