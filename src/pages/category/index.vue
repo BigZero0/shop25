@@ -10,24 +10,27 @@
           :class="{active : index == tabIndex}"
           @tap="changeTabIndex(index)"
           >
-            {{ item }}
+            {{ item.cat_name }}
           </view>
         </block>
       </view>
       <view class="cate-right">
-        <view class="floor">
-          <view class="floor-head">
-            电视
+        <block v-for="(item,index) in rightData.children" :key="index">
+          <view class="floor">
+            <view class="floor-head">
+              {{ item.cat_name }}
+            </view>
+            <view class="floor-body">
+              <block v-for="(subItem,subIndex) in item.children" :key="subIndex">
+                <view class="floor-body-item">
+                  <image :src="subItem.cat_icon"></image>
+                  <view>{{ subItem.cat_name }}</view>
+                </view>
+              </block>
+            </view>
           </view>
-          <view class="floor-body">
-            <block v-for="(item,index) in [1,2,3,34,1,1,1,1,11,1,11]" :key="index">
-              <view class="floor-body-item">
-                <image src="https://img.alicdn.com/i2/2/TB1VcxuJVXXXXXEXpXXSutbFXXX.jpg_90x90q90.jpg"></image>
-                <view>品牌名称</view>
-              </view>
-            </block>
-          </view>
-        </view>
+        </block>
+
       </view>
     </view>
   </view>
@@ -35,13 +38,17 @@
 <script>
 // 1. 导入组件
 import Search from "@/components/search";
+import request from "@/utils/request";
 
 export default{
   data(){
     return{
-      cates:["大家电","小家电",'其他的',"大家电","小家电",'其他的',"大家电","小家电",'其他的',"大家电","小家电",'其他的',"大家电","小家电",'其他的'],
+      // 所有的分类数据
+      cates:[],
       // tab栏的索引值
-      tabIndex: 0
+      tabIndex: 0,
+      // 右侧品牌数据
+      rightData:[]
 
    }
   },
@@ -54,6 +61,13 @@ export default{
     changeTabIndex(index){
       this.tabIndex = index;
     }
+  },
+  mounted () {
+    request('https://www.zhengzhicheng.cn/api/public/v1/categories').then(res=>{
+      let {message} = res.data;
+      this.cates = message;
+      this.rightData = message[0];
+    })
   }
 }
 </script>
