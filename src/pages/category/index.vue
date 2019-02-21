@@ -3,7 +3,7 @@
     <!-- 3. 使用组件 -->
     <search></search>
     <view class="cate">
-      <view class="cate-left">
+      <scroll-view scroll-y class="cate-left">
         <block v-for="(item,index) in cates" :key="index">
           <view
           class="cate-left-item"
@@ -13,8 +13,8 @@
             {{ item.cat_name }}
           </view>
         </block>
-      </view>
-      <view class="cate-right">
+      </scroll-view>
+      <scroll-view scroll-y class="cate-right">
         <block v-for="(item,index) in rightData.children" :key="index">
           <view class="floor">
             <view class="floor-head">
@@ -30,8 +30,7 @@
             </view>
           </view>
         </block>
-
-      </view>
+      </scroll-view>
     </view>
   </view>
 </template>
@@ -60,6 +59,7 @@ export default{
     // 点击切换 tab 栏
     changeTabIndex(index){
       this.tabIndex = index;
+      this.rightData = this.cates[index];
     }
   },
   mounted () {
