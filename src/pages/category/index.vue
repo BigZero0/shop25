@@ -14,7 +14,21 @@
           </view>
         </block>
       </view>
-      <view class="cate-right">右边</view>
+      <view class="cate-right">
+        <view class="floor">
+          <view class="floor-head">
+            电视
+          </view>
+          <view class="floor-body">
+            <block v-for="(item,index) in [1,2,3,34,1,1,1,1,11,1,11]" :key="index">
+              <view class="floor-body-item">
+                <image src="https://img.alicdn.com/i2/2/TB1VcxuJVXXXXXEXpXXSutbFXXX.jpg_90x90q90.jpg"></image>
+                <view>品牌名称</view>
+              </view>
+            </block>
+          </view>
+        </view>
+      </view>
     </view>
   </view>
 </template>
@@ -84,6 +98,34 @@ export default{
       background-color:#fff;
       flex:1;
       height: 100%;
+      .floor{
+        &-head{
+          text-align: center;
+          font-size:28rpx;
+          padding: 20rpx 0;
+          &::before,&::after{
+            content:'/';
+            color:#ccc;
+          }
+        }
+        &-body{
+          display: flex;
+          flex-wrap: wrap;
+
+          &-item{
+            width: 33.33%;
+            text-align: center;
+            padding: 10rpx 0;
+            image{
+              width: 120rpx;
+              height:90rpx;
+            }
+            view{
+              font-size:24rpx;
+            }
+          }
+        }
+      }
     }
   }
 </style>
