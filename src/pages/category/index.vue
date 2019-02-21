@@ -5,7 +5,11 @@
     <view class="cate">
       <view class="cate-left">
         <block v-for="(item,index) in cates" :key="index">
-          <view>
+          <view
+          class="cate-left-item"
+          :class="{active : index == tabIndex}"
+          @tap="changeTabIndex(index)"
+          >
             {{ item }}
           </view>
         </block>
@@ -21,12 +25,21 @@ import Search from "@/components/search";
 export default{
   data(){
     return{
-      cates:["大家电","小家电",'其他的',"大家电","小家电",'其他的',"大家电","小家电",'其他的',"大家电","小家电",'其他的',"大家电","小家电",'其他的']
-    }
+      cates:["大家电","小家电",'其他的',"大家电","小家电",'其他的',"大家电","小家电",'其他的',"大家电","小家电",'其他的',"大家电","小家电",'其他的'],
+      // tab栏的索引值
+      tabIndex: 0
+
+   }
   },
   // 2. 注册组件
   components: {
     Search
+  },
+  methods: {
+    // 点击切换 tab 栏
+    changeTabIndex(index){
+      this.tabIndex = index;
+    }
   }
 }
 </script>
@@ -43,9 +56,28 @@ export default{
     display: flex;
 
     &-left{
-      background-color:#ccc;
+      background-color:#f4f4f4;
       width: 200rpx;
       height: 100%;
+      &-item{
+        line-height: 100rpx;
+        text-align: center;
+        font-size:28rpx;
+        &.active{
+          color:red;
+          background-color: #fff;
+          position: relative;
+          &::before{
+            content: "";
+            background-color: red;
+            position: absolute;
+            left:0;
+            width: 7rpx;
+            top:15rpx;
+            bottom:15rpx;
+          }
+        }
+      }
     }
 
     &-right{
