@@ -1,11 +1,7 @@
 <template>
   <div>
-    <!-- 搜索框部分 -->
-    <div class="search">
-      <div class="search-input">
-        <icon class="search-icon" type="search" size="32rpx"></icon> 搜索
-      </div>
-    </div>
+    <!-- 3. 使用 Search 组件 -->
+    <Search></Search>
     <!-- 首页轮播图 -->
     <swiper
       indicator-dots
@@ -27,18 +23,47 @@
         <img class="menu-img" :src="item.image_src"></img>
       </div>
     </div>
+    <!-- 首页楼层 -->
+
+    <div class="floor">
+      <div class="floor-item" v-for="(item,index) in floors" :key="index">
+        <div class="floor-head">
+          <image :src="item.floor_title.image_src" mode="aspectFit"></image>
+        </div>
+        <div class="floor-body">
+          <div class="floor-body-left">
+            <image :src="item.product_list[0].image_src"></image>
+          </div>
+          <div class="floor-body-right">
+              <image
+              v-for="(subItem,subIndex) in item.product_list"
+              :key="subIndex"
+              v-if="subIndex != 0"
+              :src="subItem.image_src">
+              </image>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
-import request from "../../utils/request";
+import request from "@/utils/request";
+// 1. 引入搜索框组件
+import Search from '@/components/search';
 export default{
   data(){
     return{
       // 存放轮播图数据的数组
       imgUrl:[],
       // 分类数据
-      menus:[]
+      menus:[],
+      floors:[]
     }
+  },
+  // 2. 注册搜索框组件
+  components: {
+    Search
   },
   mounted () {
     // 缓存 this 对象
@@ -53,6 +78,7 @@ export default{
     //     that.imgUrl = data;
     //   }
     // });
+
     // wx.request({
     //   url:"https://www.itjustfun.cn/api/public/v1/home/catitems",
     //   // 箭头函数
@@ -62,38 +88,23 @@ export default{
     //   }
     // });
     // console.log(request);
-    request("https://itjustfun.cn/api/public/v1/home/swiperdata").then(res=>{
-      this.imgUrl = res.data.data;
+    request("https://www.zhengzhicheng.cn/api/public/v1/home/swiperdata").then(res=>{
+      this.imgUrl = res.data.message;
     });
 
-    request("https://itjustfun.cn/api/public/v1/home/catitems").then(res=>{
-      this.menus = res.data.data;
+    request("https://www.zhengzhicheng.cn/api/public/v1/home/catitems").then(res=>{
+      this.menus = res.data.message;
+    });
+
+    request("https://www.zhengzhicheng.cn/api/public/v1/home/floordata").then(res=>{
+      this.floors = res.data.message;
     });
   }
 }
 </script>
 
 <style lang="scss">
-  .search{
-    background-color: #eb4450;
-    padding: 20rpx 16rpx;
-    &-input{
-      background-color: #333;
-    }
-  }
-  .search-input{
-    height: 60rpx;
-    background-color: #fff;
-    border-radius: 3rpx;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    color:#bbb;
-    font-size: 30rpx;
-  }
-  .search-icon{
-    margin-right: 16rpx;
-  }
+
   .index-slide{
     height: 340rpx;
   }
@@ -105,10 +116,41 @@ export default{
     display: flex;
     justify-content: space-around;
     padding: 24rpx;
+    &-img{
+      width: 128rpx;
+      height: 140rpx;
+    }
   }
-  .menu-img{
-    width: 128rpx;
-    height: 140rpx;
+
+  // 楼层开始
+  .floor{
+    &-head{
+      image{
+        width: 100%;
+        height: 88rpx;
+      }
+    }
+    &-body{
+      padding: 20rpx 0 20rpx 16rpx;
+      display: flex;
+      &-left{
+        margin-right: 10rpx;
+        image{
+          width: 232rpx;
+          height: 386rpx;
+        }
+      }
+
+      &-right{
+        display: flex;
+        flex-wrap: wrap;
+        image{
+          width: 235rpx;
+          height:188rpx;
+          margin-right:10rpx;
+        }
+      }
+    }
   }
 
 </style>
