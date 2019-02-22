@@ -1,6 +1,19 @@
 <template>
   <div>
-    商品搜索列表页 {{ keyword }}
+    <!-- 搜索框 -->
+    <view class="search-wrapper">
+      <view class="search-input">
+        <icon type="search" size="16"></icon> {{keyword}}
+      </view>
+    </view>
+    <!-- tab 筛选 -->
+    <view class="tab">
+      <block v-for="(item,index) in tabs" :key="index">
+        <view class="tab-item" :class="{ active : index == tabIndex }">
+          {{item}}
+        </view>
+      </block>
+    </view>
   </div>
 </template>
 
@@ -8,20 +21,15 @@
 export default{
   data(){
     return{
-      keyword:""
+      keyword:"",
+      tabs:["综合","销量","价格"],
+      tabIndex:0
     }
   },
   // 只有 onLoad 生命周期函数才能获取页面参数
   onLoad(query){
-    // console.log('小程序生命周期函数onLoad',query);
     this.keyword = query.keyword;
   },
-  // onShow(query){
-  //   console.log('小程序生命周期函数onshow',query);
-  // },
-  // onReady(query){
-  //   console.log('小程序生命周期函数onready',query);
-  // }
 }
 </script>
 <style lang="scss">
