@@ -57,11 +57,21 @@ export default{
     this.getDate();
 
   },
-
+  // 触底事件
   onReachBottom(){
     // 从新发送请求获取数据
     // 拼接数据，显示到页面中
     this.getDate();
+  },
+  // 下拉刷新事件
+  onPullDownRefresh(){
+    // 初始化数据
+     this.lists = [];
+      this.pagenum = 1;
+      this.hasMore = true;
+      // 重新发送请求
+    this.getDate();
+
   },
   methods: {
     changeTab(index){
@@ -89,6 +99,8 @@ export default{
         this.pagenum += 1;
         // 在加载成功后应该还要取消提示
         wx.hideLoading();
+        // 当数据加载成功后，如果是下拉的情况，就隐藏下拉动画
+        wx.stopPullDownRefresh();
         // 判断是否还要加载更多
         if(goods.length < this.pagesize){
           this.hasMore = false;
