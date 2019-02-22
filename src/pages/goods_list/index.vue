@@ -20,12 +20,12 @@
     <!-- 列表布局 -->
     <view class="goods-list">
       <block v-for="(item,index) in lists" :key="index">
-        <view class="goods-item">
-        <image :src="item.goods_small_logo"></image>
-        <view class="goods-right">
-          <view class="goods-title">{{ item.goods_name }}</view>
-          <view class="price">￥{{ item.goods_price }}.00</view>
-        </view>
+        <view class="goods-item" @tap="goToDetail(item.goods_id)">
+          <image :src="item.goods_small_logo"></image>
+          <view class="goods-right">
+            <view class="goods-title">{{ item.goods_name }}</view>
+            <view class="price">￥{{ item.goods_price }}.00</view>
+          </view>
       </view>
       </block>
     </view>
@@ -78,6 +78,12 @@ export default{
     },
     changeTab(index){
       this.tabIndex = index;
+    },
+    // 跳转到详情页
+    goToDetail(id){
+      wx.navigateTo({
+        url:"/pages/goods_detail/main" + "?goods_id="+id
+      })
     },
     getDate(){
 
