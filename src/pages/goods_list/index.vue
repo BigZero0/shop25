@@ -48,18 +48,33 @@ export default{
   onLoad(query){
     this.keyword = query.keyword;
 
-    request('https://www.zhengzhicheng.cn/api/public/v1/goods/search','GET',{
-      query: this.keyword,
-      pagenum: this.pagenum
-    }).then(res=>{
-      this.lists = res.data.message.goods;
-    })
+    this.getDate();
 
 
+  },
+
+  onReachBottom(){
+    // 从新发送请求获取数据
+    // 拼接数据，显示到页面中
+    this.getDate();
   },
   methods: {
     changeTab(index){
       this.tabIndex = index;
+    },
+    getDate(){
+
+      request('https://www.zhengzhicheng.cn/api/public/v1/goods/search','GET',{
+        query: this.keyword,
+        pagenum: this.pagenum
+      }).then(res=>{
+        let {goods} = res.data.message;
+        this.lists = [...this.lists, ...goods];
+        // this.lists = this.lists.concat(goods);
+        console.log(this.pagenum);
+        this.pagenum += 1;
+      })
+
     }
   }
 }
