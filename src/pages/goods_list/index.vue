@@ -29,6 +29,10 @@
       </view>
       </block>
     </view>
+    <!-- 底部状态的文字提示 -->
+    <view class="loading" v-show="hasMore == false">
+      我也是有底线的...
+    </view>
   </div>
 </template>
 
@@ -41,7 +45,9 @@ export default{
       tabs:["综合","销量","价格"],
       tabIndex:0,
       lists:[],
-      pagenum:1
+      pagenum:1,
+      pagesize:20,
+      hasMore: true
     }
   },
   // 只有 onLoad 生命周期函数才能获取页面参数
@@ -49,7 +55,6 @@ export default{
     this.keyword = query.keyword;
 
     this.getDate();
-
 
   },
 
@@ -64,15 +69,30 @@ export default{
     },
     getDate(){
 
+      if(!this.hasMore){
+        return;
+      }
+
+      // 在发送请求的时候，提示加载中
+      wx.showLoading({
+        title: '加载中',
+      });
       request('https://www.zhengzhicheng.cn/api/public/v1/goods/search','GET',{
         query: this.keyword,
-        pagenum: this.pagenum
+        pagenum: this.pagenum,
+        pagesize: this.pagesize
       }).then(res=>{
         let {goods} = res.data.message;
         this.lists = [...this.lists, ...goods];
         // this.lists = this.lists.concat(goods);
         console.log(this.pagenum);
         this.pagenum += 1;
+        // 在加载成功后应该还要取消提示
+        wx.hideLoading();
+        // 判断是否还要加载更多
+        if(goods.length < this.pagesize){
+          this.hasMore = false;
+        }
       })
 
     }
