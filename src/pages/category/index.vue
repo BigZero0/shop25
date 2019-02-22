@@ -15,6 +15,7 @@
         </block>
       </scroll-view>
       <scroll-view scroll-y class="cate-right">
+        <!-- <navigator url="/pages/goods_list/main" >跳转到搜索商品页</navigator> -->
         <block v-for="(item,index) in rightData.children" :key="index">
           <view class="floor">
             <view class="floor-head">
@@ -22,7 +23,7 @@
             </view>
             <view class="floor-body">
               <block v-for="(subItem,subIndex) in item.children" :key="subIndex">
-                <view class="floor-body-item">
+                <view class="floor-body-item" @tap="goToList">
                   <image :src="subItem.cat_icon"></image>
                   <view>{{ subItem.cat_name }}</view>
                 </view>
@@ -56,10 +57,21 @@ export default{
     Search
   },
   methods: {
+    goToList(){
+      wx.navigateTo({
+        url: '/pages/goods_list/main'
+      })
+    },
     // 点击切换 tab 栏
     changeTabIndex(index){
       this.tabIndex = index;
-      this.rightData = this.cates[index];
+      // 如果数据多，可能在切换的时候是滚动到底部的
+      // 数据少,肯定是在顶部
+      // this.rightData = this.cates[index];
+      this.rightData = [];
+      setTimeout(()=>{
+        this.rightData = this.cates[index];
+      },0);
     }
   },
   mounted () {

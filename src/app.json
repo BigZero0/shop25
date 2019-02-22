@@ -4,7 +4,8 @@
     "pages/logs/main",
     "pages/category/main",
     "pages/cart/main",
-    "pages/my/main"
+    "pages/my/main",
+    "pages/goods_list/main"
     ],
   "window": {
     "backgroundTextStyle": "light",
