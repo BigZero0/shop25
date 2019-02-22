@@ -53,9 +53,9 @@ export default{
   // 只有 onLoad 生命周期函数才能获取页面参数
   onLoad(query){
     this.keyword = query.keyword;
-
-    this.getDate();
-
+  },
+  onShow(){
+    this.initDate();
   },
   // 触底事件
   onReachBottom(){
@@ -65,15 +65,17 @@ export default{
   },
   // 下拉刷新事件
   onPullDownRefresh(){
-    // 初始化数据
-     this.lists = [];
-      this.pagenum = 1;
-      this.hasMore = true;
-      // 重新发送请求
-    this.getDate();
-
+    this.initDate();
   },
   methods: {
+    initDate(){
+     // 初始化数据
+      this.lists = [];
+        this.pagenum = 1;
+        this.hasMore = true;
+        // 重新发送请求
+      this.getDate();
+    },
     changeTab(index){
       this.tabIndex = index;
     },
