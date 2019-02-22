@@ -1,12 +1,26 @@
 <template>
   <div>
-
+    商品详情页{{ goodsId }}
   </div>
 </template>
 
 <script>
+import request from "@/utils/request";
 export default {
+  data(){
+    return{
+      goodsId:0
+    }
+  },
+  onLoad(query){
+    this.goodsId = query.goods_id;
 
+
+    // request("")
+
+    request.get("goods/detail",{goods_id : this.goodsId})
+
+  }
 }
 </script>
 
