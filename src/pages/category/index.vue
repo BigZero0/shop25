@@ -38,7 +38,7 @@
 <script>
 // 1. 导入组件
 import Search from "@/components/search";
-import request from "@/utils/request";
+import { getCategories } from "@/api";
 
 export default{
   data(){
@@ -78,7 +78,7 @@ export default{
     }
   },
   mounted () {
-    request('https://www.zhengzhicheng.cn/api/public/v1/categories').then(res=>{
+    getCategories().then(res=>{
       let {message} = res.data;
       this.cates = message;
       this.rightData = message[0];

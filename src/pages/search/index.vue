@@ -2,6 +2,7 @@
   <div>
     <!-- 搜索框分区 -->
     <view class="search-wrapper">
+      <!-- 搜索框部分 -->
       <view class="search-content">
         <view class="search-input">
           <icon type="search" size="16"></icon>
@@ -13,33 +14,90 @@
             @confirm="confirmInput"
           />
         </view>
-        <button class="cancel">取消</button>
+        <button v-show="inputValue" class="cancel" @tap="clearInput" size="mini">取消</button>
       </view>
+      <!-- 搜索提示部分 -->
+      <scroll-view scroll-y class="search-tips" v-show="inputValue">
+        <block v-for="(item,inndex) in tips" :key="index">
+          <view class="search-item" @tap="goToDetail(item.goods_id)">{{item.goods_name}}</view>
+        </block>
+      </scroll-view>
     </view>
-
+    <!-- 搜索框 -->
+    <view class="history-wrapper" v-show="history.length > 0">
+    <view class="history-title">
+      历史搜索
+      <icon @tap="clearHistory" type="clear" size="14"></icon>
+    </view>
+    <view class="history-list" >
+      <block v-for="(item,index) in history" :key="index">
+        <view class="history-item" @tap="goToList(item)">
+          {{ item }}
+        </view>
+      </block>
+    </view>
+    </view>
   </div>
 </template>
 
 <script>
+import { getGoodsQsearch } from "@/api";
 export default{
   data(){
     return{
-      inputValue:""
+      inputValue:"",
+      tips:[],
+      history:[]
     }
   },
+  onShow(){
+    this.history = wx.getStorageSync('history') || [];
+  },
   methods: {
+    // 获取输入框内容
     handleInput(event){
       // console.log('测试是否绑定事件',event);
       // console.log(event.target.value);
       // console.log(this.inputValue);
+      getGoodsQsearch({
+        query: this.inputValue
+      }).then(res=>{
+        this.tips = res.data.data;
+      })
     },
     // 手机端，按下完成按钮触发
     // 模拟器中按下回车键触发
     confirmInput(){
+      // 把输入框的数据先存起来
+      this.history.unshift(this.inputValue);
+      // 数组去重
+      this.history = [...new Set(this.history)];
+      // 设置本地存储
+      wx.setStorageSync('history', this.history);
       // console.log(this.inputValue);
       wx.navigateTo({
         url:"/pages/goods_list/main?keyword="+this.inputValue
+      });
+    },
+    clearInput(){
+      this.inputValue = "";
+    },
+    // 跳转到详情页
+    goToDetail(id){
+      wx.navigateTo({
+        url: "/pages/goods_detail/main?goods_id="+id
       })
+    },
+    // 跳转到列表页
+    goToList(item){
+      wx.navigateTo({
+        url: "/pages/goods_list/main?keyword="+item
+      })
+    },
+    // 清空搜索历史
+    clearHistory(){
+      this.history = [];
+      wx.removeStorageSync('history');
     }
   }
 }
