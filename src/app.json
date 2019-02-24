@@ -6,6 +6,7 @@
     "pages/cart/main",
     "pages/my/main",
     "pages/goods_list/main",
+    "pages/search/main",
     "pages/goods_detail/main"
     ],
   "window": {
