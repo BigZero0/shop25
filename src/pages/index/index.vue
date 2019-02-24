@@ -48,6 +48,7 @@
   </div>
 </template>
 <script>
+import { getIndexSwiper,getIndexCat,getIndexFloor } from "@/api";
 import request from "@/utils/request";
 // 1. 引入搜索框组件
 import Search from '@/components/search';
@@ -68,37 +69,24 @@ export default{
   mounted () {
     // 缓存 this 对象
     let that = this;
-    // // 发送请求获取轮播图数据
-    // wx.request({
-    //   url:"https://itjustfun.cn/api/public/v1/home/swiperdata",
-    //   success(res){
-    //     // 获取返回的数据
-    //     let data = res.data.data;
-    //     // 把数据赋值给 imgUrl
-    //     that.imgUrl = data;
-    //   }
-    // });
 
-    // wx.request({
-    //   url:"https://www.itjustfun.cn/api/public/v1/home/catitems",
-    //   // 箭头函数
-    //   success:(res)=>{
-    //     console.log(res);
-    //     this.menus = res.data.data;
-    //   }
-    // });
-    // console.log(request);
-    request("https://www.zhengzhicheng.cn/api/public/v1/home/swiperdata").then(res=>{
-      this.imgUrl = res.data.message;
-    });
+    this.getData();
+  },
+  methods: {
+    getData(){
+      getIndexSwiper().then(res=>{
+        this.imgUrl = res.data.data;
+      });
 
-    request("https://www.zhengzhicheng.cn/api/public/v1/home/catitems").then(res=>{
-      this.menus = res.data.message;
-    });
+      getIndexCat().then(res=>{
+        this.menus = res.data.data;
+      });
 
-    request("https://www.zhengzhicheng.cn/api/public/v1/home/floordata").then(res=>{
-      this.floors = res.data.message;
-    });
+      getIndexFloor().then(res=>{
+        this.floors = res.data.data;
+      });
+
+    }
   }
 }
 </script>

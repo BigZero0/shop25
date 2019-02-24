@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { getGoodsSearch } from "@/api";
 import request from "@/utils/request";
 export default{
   data(){
@@ -95,15 +96,19 @@ export default{
       wx.showLoading({
         title: '加载中',
       });
-      request('https://www.zhengzhicheng.cn/api/public/v1/goods/search','GET',{
+
+      getGoodsSearch({
         query: this.keyword,
         pagenum: this.pagenum,
         pagesize: this.pagesize
       }).then(res=>{
-        let {goods} = res.data.message;
+        // 获取商品数据
+        let {goods} = res.data.data;
+        // 两个数组用 ...语法展开，再合并再一起
         this.lists = [...this.lists, ...goods];
         // this.lists = this.lists.concat(goods);
         console.log(this.pagenum);
+        // 页数加 1
         this.pagenum += 1;
         // 在加载成功后应该还要取消提示
         wx.hideLoading();

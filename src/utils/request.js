@@ -15,7 +15,10 @@ function request(url, method = "GET", data = {}) {
   });
 }
 
-request.baseURL = "https://www.zhengzhicheng.cn/api/public/v1/";
+// 有证书，但是经常容易挂
+// request.baseURL = "https://www.zhengzhicheng.cn/api/public/v1/";
+// 证书过期，但是取消域名校验，还可以使用
+request.baseURL = "https://itjustfun.cn/api/public/v1/";
 
 request.get = function(url, data) {
   return request(request.baseURL + url, "GET", data);
