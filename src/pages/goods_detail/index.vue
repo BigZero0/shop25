@@ -1,25 +1,72 @@
 <template>
   <div>
-    商品详情页{{ goodsId }}
+    <!-- 轮播图分区 -->
+    <swiper indicator-dots autoplay circular>
+        <block v-for="(item,index) in detail.pics" :key="index">
+            <swiper-item>
+                <image @tap="previewbigImg(item.pics_big)" class="slide-image" mode="aspectFill" :src="item.pics_big"></image>
+            </swiper-item>
+        </block>
+    </swiper>
+    <!-- 商品价格和商品信息 -->
+    <view class="goods-price">
+      ￥ {{ detail.goods_price }}
+    </view>
+    <!-- 商品信息 -->
+    <view class="goods-info">
+      <view class="info-left">
+        {{ detail.goods_name }}
+      </view>
+      <view class="info-right">
+        收藏
+      </view>
+    </view>
+    <!-- 商品详情 -->
+    <view class="detail">
+      <view class="detail-title">商品详情</view>
+      <view class="detail-content">
+        <!-- {{ detail.goods_introduce }} -->
+        <rich-text type="node" :nodes="detail.goods_introduce"></rich-text>
+      </view>
+    </view>
+
+
   </div>
 </template>
 
 <script>
-import request from "@/utils/request";
+import { getGoodsDetail } from "@/api";
 export default {
   data(){
     return{
-      goodsId:0
+      goodsId:0,
+      detail:{}
     }
   },
   onLoad(query){
     this.goodsId = query.goods_id;
 
+    getGoodsDetail({
+      goods_id: this.goodsId
+    }).then(res=>{
+      this.detail = res.data.message;
+    })
 
-    // request("")
 
-    request.get("goods/detail",{goods_id : this.goodsId})
-
+  },
+  methods: {
+    previewbigImg(url){
+      // console.log(this.detail.pics)
+      let imgUrls = [];
+      this.detail.pics.forEach(v=>{
+        imgUrls.push(v.pics_big);
+      });
+      // console.log(imgUrls);
+      wx.previewImage({
+        current: url, // 当前显示图片的http链接
+        urls: imgUrls // 需要预览的图片http链接列表
+      })
+    }
   }
 }
 </script>
@@ -45,7 +92,14 @@ swiper{
     padding:20rpx;
     padding-top:0;
     display: flex;
-
+    .info-left{display: -webkit-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-all;
+      -webkit-box-orient: vertical;
+      //想要显示的行数
+      -webkit-line-clamp: 2;
+    }
     .info-right{
         width:160rpx;
         text-align: center;

@@ -52,6 +52,7 @@ export default{
   },
   onShow(){
     this.history = wx.getStorageSync('history') || [];
+
   },
   methods: {
     // 获取输入框内容
@@ -62,7 +63,7 @@ export default{
       getGoodsQsearch({
         query: this.inputValue
       }).then(res=>{
-        this.tips = res.data.data;
+        this.tips = res.data.message;
       })
     },
     // 手机端，按下完成按钮触发
