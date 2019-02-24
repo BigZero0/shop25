@@ -25,13 +25,14 @@
     <!-- 商品详情 -->
     <view class="detail">
       <view class="detail-title">商品详情</view>
-      <view class="detail-content">
+      <view class="detail-content" v-html="detail.goods_introduce">
         <!-- {{ detail.goods_introduce }} -->
-        <rich-text type="node" :nodes="detail.goods_introduce"></rich-text>
+        <!-- <rich-text type="node" :nodes="detail.goods_introduce"></rich-text> -->
       </view>
     </view>
     <!-- 底部固定栏 -->
     <view class="footer">
+      <button class="contact" open-type="contact">打开客服聊天窗口</button>
       <view class="ft-left">
         <span class="iconfont icon-kefu"></span>
         客服
