@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <view>
     <!-- 轮播图分区 -->
     <swiper indicator-dots autoplay circular>
         <block v-for="(item,index) in detail.pics" :key="index">
@@ -18,6 +18,7 @@
         {{ detail.goods_name }}
       </view>
       <view class="info-right">
+        <span class="iconfont icon-shoucang"></span>
         收藏
       </view>
     </view>
@@ -29,9 +30,26 @@
         <rich-text type="node" :nodes="detail.goods_introduce"></rich-text>
       </view>
     </view>
+    <!-- 底部固定栏 -->
+    <view class="footer">
+      <view class="ft-left">
+        <span class="iconfont icon-kefu"></span>
+        客服
+      </view>
+      <view class="ft-left">
+        <span class="iconfont icon-gouwuche"></span>
+        购物车
+      </view>
+      <view class="ft-right">
+        加入购物车
+      </view>
+      <view class="ft-right">
+        立即购买
+      </view>
 
+    </view>
 
-  </div>
+  </view>
 </template>
 
 <script>
@@ -50,6 +68,8 @@ export default {
       goods_id: this.goodsId
     }).then(res=>{
       this.detail = res.data.message;
+      // 因为小程序暂时还不支持 webp 图片格式，我们利用正则把 webp 图片改成 jpg
+      this.detail.goods_introduce = this.detail.goods_introduce.replace(/jpg?.+?.webp/g,'jpg');
     })
 
 
@@ -121,6 +141,10 @@ swiper{
     .detail-title{
         padding:20rpx;
         border-bottom:1px #eee solid;
+    }
+    // 解决富文本图片间的缝隙
+    .detail-content{
+      font-size:0;
     }
 }
 
