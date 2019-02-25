@@ -103,7 +103,7 @@ export default{
         pagesize: this.pagesize
       }).then(res=>{
         // 获取商品数据
-        let {goods} = res.data.data;
+        let {goods} = res.data.message;
         // 两个数组用 ...语法展开，再合并再一起
         this.lists = [...this.lists, ...goods];
         // this.lists = this.lists.concat(goods);

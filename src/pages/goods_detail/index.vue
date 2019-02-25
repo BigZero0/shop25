@@ -90,21 +90,19 @@ export default {
     },
     // 点击加入购物车，把商品加入购物车列表中
     addToCartList(id){
-      // 防止数据还没加载到，就直接返回，不运行加入购物车的逻辑
+      // 如果数据还没加载到，就没有商品id和详细数据，直接返回，不运行加入购物车的逻辑
       if(!id) return;
       // 获取本地的购物车数据
       let cartList = wx.getStorageSync('cartList') || {};
 
-      // 先把当前页的添加选中状态
+      // 当前商品详情添加选中状态
       this.detail.selected = true;
-      // 给当前页添加数量
+      // 当前商品详情添加数量
       this.detail.count = 1;
 
-
       // 把当前商品详情数据，添加到本地存储中是有条件
-      // 如果本地存储中没有改商品，直接添加
-      // 如果本地存储中已经存在过该商品，数量应该是相加
-      console.log(cartList[id], this.detail);
+      // 条件1：如果本地存储中没有改商品，直接添加
+      // 条件2：如果本地存储中已经存在过该商品，该数量应该是相加
       if(!cartList[id]){
         cartList[id] = this.detail;
       }else{
@@ -112,17 +110,16 @@ export default {
         cartList[id].count += this.detail.count;
       }
 
+      // 把修改过的数据重新设置到本地存储
       wx.setStorageSync('cartList',cartList);
 
       // 添加成功后给用户提示
       wx.showToast({
         title: '加入成功', //提示的内容,
-        icon: 'success', //图标,
-        duration: 1000, //延迟时间,
-        mask: true,     //显示透明蒙层，防止触摸穿透,
+        icon: 'success',  //图标,
+        duration: 1000,   //延迟时间,
+        mask: true,       //显示透明蒙层，防止触摸穿透,
       });
-
-
     }
   }
 }

@@ -41,9 +41,9 @@
                 <div class="ware-price">￥{{item.goods_price}}</div>
                 <!-- 计数器 -->
                 <div class="calculate">
-                  <div class="rect" @tap="calculateHandle(-1)">-</div>
+                  <div class="rect" @tap.stop="calculateHandle(index, -1)">-</div>
                   <div class="number">{{ item.count }}</div>
-                  <div class="rect" @tap="calculateHandle(1)">+</div>
+                  <div class="rect" @tap.stop="calculateHandle(index, 1)">+</div>
                 </div>
               </div>
           </div>
@@ -53,17 +53,18 @@
     </div>
     <!-- 底部结算 -->
     <div class="cart-total">
-      <div class="total-button" @tap="choiceAll">
-        <view class="iconfont icon-xuanze-fill"></view>
+      <div class="total-button" @tap="choiceAll(allCount == cartLength)">
+        <view class="iconfont icon-xuanze" :class="{ 'icon-xuanze-fill' : allCount == cartLength }"></view>
+        全选
       </div>
       <div class="total-center">
-        <div class="colorRed">￥0.00</div>
+        <div class="colorRed">￥{{ allPrice }}</div>
         <div class="price-tips">
           包邮
         </div>
       </div>
       <div class="accounts" @tap="accountsHandle">
-        结算
+        结算({{allCount}})
       </div>
 
     </div>
@@ -79,8 +80,36 @@ export default{
         telNumber:"",
         addr:""
       },
-      cartList:{}
+      cartList:{},
+      allCount:0,
+      cartLength: 0
     }
+  },
+  computed: {
+    allPrice(){
+      let allPrice = 0;
+      let allCount = 0;
+      let cartList = this.cartList;
+      for(let key in cartList){
+        if(cartList[key].selected){
+          allPrice += cartList[key].count * cartList[key].goods_price;
+          allCount++;
+        }
+      }
+      this.cartLength = Object.keys(this.cartList).length;
+      this.allCount = allCount;
+      return allPrice;
+    },
+    // allCount(){
+    //   let cartList = this.cartList;
+    //   for(let key in cartList){
+    //     if(cartList[key].selected){
+    //     }
+    //   }
+    //   return allCount;
+
+    // }
+
   },
   onLoad(){
     this.address = wx.getStorageSync('address') || {};
@@ -112,12 +141,39 @@ export default{
       this.cartList[index].selected = !this.cartList[index].selected;
     },
     // 点击加减修改个数
-    calculateHandle(type){
-      console.log("点击加减"+type)
+    calculateHandle(index, number){
+      // console.log("点击加减"+type)
+      this.cartList[index].count += number;
+      if(this.cartList[index].count < 1){
+        wx.showModal({
+          title: '提示', //提示的标题,
+          content: '是否删除商品', //提示的内容,
+          showCancel: true, //是否显示取消按钮,
+          confirmText: '删除', //确定按钮的文字，默认为取消，最多 4 个字符,
+          confirmColor: '#f00', //确定按钮的文字颜色,
+          success: res => {
+            if (res.confirm) {
+              delete this.cartList[index];
+              console.log(this.cartList);
+              // 把对象转成字符串，在转会对象，处理成一个全新的对象，再赋值给 this.cartList
+              this.cartList = JSON.parse(JSON.stringify(this.cartList));
+            } else if (res.cancel) {
+              this.cartList[index].count = 1;
+            }
+          }
+        });
+      }
     },
     // 全选
-    choiceAll(){
-
+    choiceAll(bl){
+      // console.log(bl)
+      // bl = !bl;
+      // this.cartList.forEach( v =>{
+      //   v.selected = !bl
+      // })
+      for(let key in this.cartList){
+         this.cartList[key].selected = !bl;
+      }
     },
     // 结算按钮
     accountsHandle(){

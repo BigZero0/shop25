@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 4,
+			"current": 2,
 			"list": [
 				{
 					"id": -1,
@@ -50,7 +50,7 @@
 					"id": 2,
 					"name": "列表页",
 					"pathName": "pages/goods_list/main",
-					"query": "keyword=米",
+					"query": "keyword=mi",
 					"scene": null
 				},
 				{
@@ -64,7 +64,7 @@
 					"id": 4,
 					"name": "商品详情页",
 					"pathName": "pages/goods_detail/main",
-					"query": "goods_id=710",
+					"query": "goods_id=111",
 					"scene": null
 				},
 				{
