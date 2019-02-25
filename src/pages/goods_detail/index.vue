@@ -37,10 +37,10 @@
         <span class="iconfont icon-kefu"></span>
         客服
       </view>
-      <view class="ft-left">
+      <navigator open-type="switchTab" url="/pages/cart/main" class="ft-left">
         <span class="iconfont icon-gouwuche"></span>
         购物车
-      </view>
+      </navigator>
       <view class="ft-right">
         加入购物车
       </view>

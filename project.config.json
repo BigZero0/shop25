@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 5,
+			"current": 6,
 			"list": [
 				{
 					"id": -1,
@@ -72,6 +72,12 @@
 					"name": "购物车",
 					"pathName": "pages/cart/main",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "111",
+					"pathName": "pages/logs/main",
 					"scene": null
 				}
 			]

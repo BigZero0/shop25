@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 头部选择地址 -->
     <view class="cart-top" @tap="chooseAddress">
       <block v-if="address.userName">
         <view class="user">
@@ -15,6 +16,58 @@
       </block>
       <view class="address-border"></view>
     </view>
+    <!-- 购物车商品列表 -->
+    <div class="list-title">
+      优购生活馆
+    </div>
+    <div class="ware-list">
+      <block v-for="(item,index) in [1,2,3,4,5]" :key="index">
+        <div class="ware-item">
+          <!-- 选择按钮 -->
+          <div class="choice-button">
+            <view class="iconfont icon-xuanze-fill"></view>
+          </div>
+          <!-- 内容主体 -->
+          <div class="ware-content">
+            <!-- 主体左图片 -->
+            <div class="ware-image">
+              <img src="https://img.alicdn.com/imgextra/i1/2536908852/TB2PZ9rpstnpuFjSZFKXXalFFXa_!!2536908852-0-beehive-scenes.jpg_180x180xzq90.jpg_.webp" alt="" />
+            </div>
+              <!-- 主体右信息 -->
+            <div class="ware-info">
+              <view>商品名称</view>
+              <div class="ware-info-btm">
+                <!-- 价格 -->
+                <div class="ware-price">￥998</div>
+                <!-- 计数器 -->
+                <div class="calculate">
+                  <div class="rect">-</div>
+                  <div class="number">123</div>
+                  <div class="rect">+</div>
+                </div>
+              </div>
+          </div>
+
+          </div>
+        </div>
+      </block>
+    </div>
+    <!-- 底部结算 -->
+    <div class="cart-total">
+      <div class="total-button">
+        <view class="iconfont icon-xuanze-fill"></view>
+      </div>
+      <div class="total-center">
+        <div class="colorRed">￥0.00</div>
+        <div class="price-tips">
+          包邮
+        </div>
+      </div>
+      <div class="accounts">
+        结算
+      </div>
+
+    </div>
   </div>
 </template>
 
@@ -204,6 +257,7 @@ export default{
   .total-center {
     flex: 1;
     padding: 20rpx;
+    text-align: right;
 
     .colorRed {
       color: red;
