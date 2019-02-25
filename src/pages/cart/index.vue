@@ -21,40 +21,39 @@
       优购生活馆
     </div>
     <div class="ware-list">
-      <block v-for="(item,index) in [1,2,3,4,5]" :key="index">
+      <block v-for="(item,index) in cartList" :key="index">
         <div class="ware-item">
           <!-- 选择按钮 -->
-          <div class="choice-button">
-            <view class="iconfont icon-xuanze-fill"></view>
+          <div class="choice-button" @tap="choiceGoods(index)">
+            <view class="iconfont icon-xuanze" :class="{ 'icon-xuanze-fill' : item.selected }"></view>
           </div>
           <!-- 内容主体 -->
           <div class="ware-content">
             <!-- 主体左图片 -->
             <div class="ware-image">
-              <img src="https://img.alicdn.com/imgextra/i1/2536908852/TB2PZ9rpstnpuFjSZFKXXalFFXa_!!2536908852-0-beehive-scenes.jpg_180x180xzq90.jpg_.webp" alt="" />
+              <img :src="item.goods_small_logo" alt="" />
             </div>
               <!-- 主体右信息 -->
             <div class="ware-info">
-              <view>商品名称</view>
+              <view>{{ item.goods_name }}</view>
               <div class="ware-info-btm">
                 <!-- 价格 -->
-                <div class="ware-price">￥998</div>
+                <div class="ware-price">￥{{item.goods_price}}</div>
                 <!-- 计数器 -->
                 <div class="calculate">
-                  <div class="rect">-</div>
-                  <div class="number">123</div>
-                  <div class="rect">+</div>
+                  <div class="rect" @tap="calculateHandle(-1)">-</div>
+                  <div class="number">{{ item.count }}</div>
+                  <div class="rect" @tap="calculateHandle(1)">+</div>
                 </div>
               </div>
           </div>
-
           </div>
         </div>
       </block>
     </div>
     <!-- 底部结算 -->
     <div class="cart-total">
-      <div class="total-button">
+      <div class="total-button" @tap="choiceAll">
         <view class="iconfont icon-xuanze-fill"></view>
       </div>
       <div class="total-center">
@@ -63,7 +62,7 @@
           包邮
         </div>
       </div>
-      <div class="accounts">
+      <div class="accounts" @tap="accountsHandle">
         结算
       </div>
 
@@ -79,11 +78,15 @@ export default{
         userName:"",
         telNumber:"",
         addr:""
-      }
+      },
+      cartList:{}
     }
   },
   onLoad(){
     this.address = wx.getStorageSync('address') || {};
+  },
+  onShow(){
+    this.cartList = wx.getStorageSync('cartList') || {};
   },
   methods: {
     // 选择收货地址
@@ -99,6 +102,23 @@ export default{
         }
       })
     },
+    // 商品选择按钮
+    choiceGoods(index){
+      // console.log('商品选择按钮'+index);
+      this.cartList[index].selected = !this.cartList[index].selected;
+    },
+    // 点击加减修改个数
+    calculateHandle(type){
+      console.log("点击加减"+type)
+    },
+    // 全选
+    choiceAll(){
+
+    },
+    // 结算按钮
+    accountsHandle(){
+
+    }
   }
 }
 </script>

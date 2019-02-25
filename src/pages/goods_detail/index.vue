@@ -41,7 +41,7 @@
         <span class="iconfont icon-gouwuche"></span>
         购物车
       </navigator>
-      <view class="ft-right">
+      <view class="ft-right" @tap="addToCartList(detail.goods_id)">
         加入购物车
       </view>
       <view class="ft-right">
@@ -87,6 +87,25 @@ export default {
         current: url, // 当前显示图片的http链接
         urls: imgUrls // 需要预览的图片http链接列表
       })
+    },
+    // 点击加入购物车，把商品加入购物车列表中
+    addToCartList(id){
+      // 防止数据还没加载到，就直接返回，不运行加入购物车的逻辑
+      if(!id) return;
+      // 点击按钮的时候，重新获取本地的购物车数据
+      let cartList = wx.getStorageSync('cartList') || {};
+
+      // 购物车商品选中状态
+      this.detail.selected = true;
+      // 购物车中的商品数量
+      this.detail.count = 1;
+
+      // 把商品信息存到本地
+      cartList[id] = this.detail;
+
+      wx.setStorageSync('cartList',cartList);
+
+
     }
   }
 }
