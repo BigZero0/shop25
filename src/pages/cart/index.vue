@@ -22,9 +22,9 @@
     </div>
     <div class="ware-list">
       <block v-for="(item,index) in cartList" :key="index">
-        <div class="ware-item">
+        <div class="ware-item" @tap="goToDetail(index)">
           <!-- 选择按钮 -->
-          <div class="choice-button" @tap="choiceGoods(index)">
+          <div class="choice-button" @tap.stop="choiceGoods(index)">
             <view class="iconfont icon-xuanze" :class="{ 'icon-xuanze-fill' : item.selected }"></view>
           </div>
           <!-- 内容主体 -->
@@ -101,6 +101,10 @@ export default{
           wx.setStorageSync('address',this.address);
         }
       })
+    },
+    // 点击商品实现跳转
+    goToDetail(index){
+      wx.navigateTo({ url: '/pages/goods_detail/main?goods_id='+index });
     },
     // 商品选择按钮
     choiceGoods(index){
