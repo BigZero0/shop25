@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 7,
 			"list": [
 				{
 					"id": -1,
@@ -78,6 +78,13 @@
 					"id": -1,
 					"name": "111",
 					"pathName": "pages/logs/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "授权页",
+					"pathName": "pages/auth/main",
 					"query": "",
 					"scene": null
 				}

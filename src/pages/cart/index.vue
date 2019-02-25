@@ -104,6 +104,7 @@ export default{
     //   let cartList = this.cartList;
     //   for(let key in cartList){
     //     if(cartList[key].selected){
+    //        allCount++;
     //     }
     //   }
     //   return allCount;
@@ -166,17 +167,23 @@ export default{
     },
     // 全选
     choiceAll(bl){
+      // 点击全选按钮，获取全选按钮的选中状态
       // console.log(bl)
+      // 把全选按钮的选中状态取反，用于设置列表中的所有商品的选中状态
       // bl = !bl;
-      // this.cartList.forEach( v =>{
-      //   v.selected = !bl
-      // })
       for(let key in this.cartList){
          this.cartList[key].selected = !bl;
       }
     },
-    // 结算按钮
+    // 结算按钮 - 进行登录授权校验
     accountsHandle(){
+      // 如果本地没有 token ，那就跳转到授权页面，发起请求换取 token
+      if(!wx.getStorageSync('token')){
+        // 跳转到授权页面
+        wx.navigateTo({ url: '/pages/auth/main' });
+      }else{
+        wx.navigateTo({ url: '/pages/pay/main' });
+      }
 
     }
   }

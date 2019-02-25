@@ -11,3 +11,6 @@ export const getCategories = () => request.get("categories");
 export const getGoodsQsearch = obj => request.get("goods/qsearch", obj);
 export const getGoodsSearch = obj => request.get("goods/search", obj);
 export const getGoodsDetail = obj => request.get("goods/detail", obj);
+
+// 根据微信用户信息换取 token 的登录接口
+export const getToken = obj => request.post("users/wxlogin", obj);
