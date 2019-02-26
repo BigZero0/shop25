@@ -2,6 +2,7 @@
 // 1. 用 Promise 封装
 
 function request(url, method = "GET", data = {}, header = {}) {
+  wx.showNavigationBarLoading();
   // 调用 request 函数返回 Promise 对象
   return new Promise((resolve, reject) => {
     wx.request({
@@ -11,6 +12,7 @@ function request(url, method = "GET", data = {}, header = {}) {
       header,
       success: res => {
         resolve(res);
+        wx.hideNavigationBarLoading();
       }
     });
   });
