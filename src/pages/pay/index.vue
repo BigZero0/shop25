@@ -119,10 +119,17 @@ export default{
         const { wxorder  } = res.data.message
         wx.requestPayment({
           ...wxorder,
-          success(res) {
+          success:(res)=> {
             console.log("支付成功");
+            for(let key in this.cartList){
+              if(this.cartList[key].selected){
+                delete this.cartList[key];
+              }
+            }
+            this.cartList = JSON.parse(JSON.stringify(this.cartList));
+            wx.setStorageSync('cartList',this.cartList);
           },
-          fail(res) {
+          fail:(res)=> {
             console.log("支付失败");
           }
         })

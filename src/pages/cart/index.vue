@@ -1,5 +1,18 @@
 <template>
   <div>
+
+    <block v-if="cartLength == 0" >
+      <view>
+        空购物车
+        <navigator
+          url="/pages/index/main"
+          open-type="switchTab"
+          hover-class="none">
+          去首页看看
+        </navigator>
+      </view>
+    </block>
+    <block v-else>
     <!-- 头部选择地址 -->
     <view class="cart-top" @tap="chooseAddress">
       <block v-if="address.userName">
@@ -68,6 +81,7 @@
       </div>
 
     </div>
+    </block>
   </div>
 </template>
 
@@ -99,6 +113,7 @@ export default{
       }
       this.cartLength = Object.keys(this.cartList).length;
       this.allCount = allCount;
+      wx.setStorageSync('cartList', cartList);
       return allPrice;
     },
     // allCount(){
