@@ -8,6 +8,7 @@
     "pages/goods_list/main",
     "pages/search/main",
     "pages/auth/main",
+    "pages/pay/main",
     "pages/goods_detail/main"
     ],
   "window": {
