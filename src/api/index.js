@@ -17,6 +17,6 @@ export const getToken = obj => request.post("users/wxlogin", obj);
 
 // 以下接口需要 登录后才能访问
 export const orderCreate = obj => request.auth("my/orders/create", obj);
-export const orderPay = obj => request.auth("orders/req_unifiedorder", obj);
+export const orderPay = obj => request.auth("my/orders/req_unifiedorder", obj);
 export const orderCheck = obj => request.auth("my/orders/chkOrder", obj);
 export const orderAll = obj => request.auth.get("my/orders/all", obj);

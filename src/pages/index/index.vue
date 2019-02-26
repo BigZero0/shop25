@@ -75,15 +75,15 @@ export default{
   methods: {
     getData(){
       getIndexSwiper().then(res=>{
-        this.imgUrl = res.data.data;
+        this.imgUrl = res.data.message;
       });
 
       getIndexCat().then(res=>{
-        this.menus = res.data.data;
+        this.menus = res.data.message;
       });
 
       getIndexFloor().then(res=>{
-        this.floors = res.data.data;
+        this.floors = res.data.message;
       });
 
     }

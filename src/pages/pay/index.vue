@@ -115,27 +115,19 @@ export default{
       orderPay({
         "order_number": this.order_number
       }).then(res=>{
-        console.log(res);
+        // const {signType,timeStamp,nonceStr,package,signType,paySign} = res.data.message.wxorder
+        const { wxorder  } = res.data.message
         wx.requestPayment({
-          "signType": 'MD5',
-          "timeStamp": "1525681145",
-          "nonceStr": "BkPggorBXZwPGXe3",
-          "package": "prepay_id=wx071619042918087bb4c1d3d72999385683",
-          "signType": "MD5",
-          "paySign": "D1642DEEF1663C8012EDEB9297E1D516",
+          ...wxorder,
           success(res) {
             console.log("支付成功");
-            },
+          },
           fail(res) {
             console.log("支付失败");
           }
         })
       });
 
-
-      orderAll().then(res=>{
-        console.loeg(res);
-      })
 
 
 
