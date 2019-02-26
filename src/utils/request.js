@@ -33,7 +33,38 @@ request.post = function(url, data) {
 
 // 封装带 token 的请求方法
 request.auth = function(url, data) {
-  return request(request.baseURL + url, "POST", data, header);
+  // 授权请求第一步，先获取本地 token
+  const token = wx.getStorageSync("token");
+  // 如果有 token
+  if (token) {
+    // 在请求头带上 token 信息
+    return request(request.baseURL + url, "POST", data, {
+      Authorization: token
+    });
+  } else {
+    // 如果没有 token ，跳转到授权页面，授权获取
+    wx.navigateTo({ url: "/pages/auth/main" });
+    // 如果不返回 Promise 对象，在调用 request.auth 后再使用 then 就会报错
+    return new Promise(() => {});
+  }
+};
+
+// 封装带 token 的请求方法
+request.auth.get = function(url, data) {
+  // 授权请求第一步，先获取本地 token
+  const token = wx.getStorageSync("token");
+  // 如果有 token
+  if (token) {
+    // 在请求头带上 token 信息
+    return request(request.baseURL + url, "GET", data, {
+      Authorization: token
+    });
+  } else {
+    // 如果没有 token ，跳转到授权页面，授权获取
+    wx.navigateTo({ url: "/pages/auth/main" });
+    // 如果不返回 Promise 对象，在调用 request.auth 后再使用 then 就会报错
+    return new Promise(() => {});
+  }
 };
 
 // 导出 request 函数

@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import { orderCreate } from "@/api";
 export default{
   data(){
     return {
@@ -178,12 +179,31 @@ export default{
     // 结算按钮 - 进行登录授权校验
     accountsHandle(){
       // 如果本地没有 token ，那就跳转到授权页面，发起请求换取 token
-      if(!wx.getStorageSync('token')){
-        // 跳转到授权页面
-        wx.navigateTo({ url: '/pages/auth/main' });
-      }else{
-        wx.navigateTo({ url: '/pages/pay/main' });
+      // if(!wx.getStorageSync('token')){
+      //   // 跳转到授权页面
+      //   wx.navigateTo({ url: '/pages/auth/main' });
+      // }else{
+      //   wx.navigateTo({ url: '/pages/pay/main' });
+      // }
+
+      // 根据购物车商品,创建订单
+      orderCreate({
+  "order_price": 0.1,
+  "consignee_addr": "广州市天河区",
+  "order_detail":
+    "[{\"goods_id\":55578,\"goods_name\":\"初语2017秋装新款潮牌女装加绒宽松BF风慵懒卫衣女套头连帽上衣\",\"goods_price\":279,\"goods_small_logo\":\"http://image2.suning.cn/uimg/b2c/newcatentries/0070067836-000000000690453616_2_400x400.jpg\",\"counts\":1,\"selectStatus\":true}]",
+  "goods": [
+      {
+          "goods_id": 5,
+          "goods_number": 11,
+          "goods_price": 15
       }
+  ]
+}).then(res=>{
+  console.log(res);
+})
+
+
 
     }
   }
