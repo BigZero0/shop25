@@ -10,7 +10,7 @@
     </swiper>
     <!-- 商品价格和商品信息 -->
     <view class="goods-price">
-      ￥ {{ detail.goods_price }}
+      ￥ 商品仅为展示使用，不提供购买
     </view>
     <!-- 商品信息 -->
     <view class="goods-info">

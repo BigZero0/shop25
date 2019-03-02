@@ -24,7 +24,7 @@
           <image :src="item.goods_small_logo"></image>
           <view class="goods-right">
             <view class="goods-title">{{ item.goods_name }}</view>
-            <view class="price">￥{{ item.goods_price }}.00</view>
+            <view class="price">教学使用，课堂案例，商品不提供购买</view>
           </view>
       </view>
       </block>

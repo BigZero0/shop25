@@ -2,9 +2,12 @@
 import request from "@/utils/request";
 
 // 首页API
-export const getIndexSwiper = () => request.get("home/swiperdata");
-export const getIndexCat = () => request.get("home/catitems");
-export const getIndexFloor = () => request.get("home/floordata");
+export const getIndexSwiper = () =>
+  request("https://itjustfun.cn/api/public/v1/home/swiperdata");
+export const getIndexCat = () =>
+  request("https://itjustfun.cn/api/public/v1/home/catitems");
+export const getIndexFloor = () =>
+  request("https://itjustfun.cn/api/public/v1/home/floordata");
 // 分类页API
 export const getCategories = () => request.get("categories");
 // 商品API

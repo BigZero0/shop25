@@ -52,7 +52,6 @@ export default{
   },
   onShow(){
     this.history = wx.getStorageSync('history') || [];
-
   },
   methods: {
     // 获取输入框内容

@@ -51,7 +51,7 @@
               <view>{{ item.goods_name }}</view>
               <div class="ware-info-btm">
                 <!-- 价格 -->
-                <div class="ware-price">￥{{item.goods_price}}</div>
+                <div class="ware-price">￥0.00</div>
                 <!-- 计数器 -->
                 <div class="calculate">
                   <div class="rect" @tap.stop="calculateHandle(index, -1)">-</div>

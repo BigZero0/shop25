@@ -44,9 +44,9 @@
         </div>
       </block>
     </div>
-
+    <!-- <view class="red">该项目仅为教学使用，点击支付不会发生真正的交易</view> -->
     <!-- 支付按钮 -->
-    <button type="primary" @tap="payOrder">支付订单</button>
+    <button type="warn" @tap="payOrder">教学案例，已关闭支付功能</button>
 
 
   </div>
@@ -111,7 +111,14 @@ export default{
       wx.navigateTo({ url: '/pages/goods_detail/main?goods_id='+index });
     },
     payOrder(){
-
+      wx.showToast({
+        title: '已关闭支付功能', //提示的内容,
+        icon: 'success', //图标,
+        duration: 2000, //延迟时间,
+        mask: true, //显示透明蒙层，防止触摸穿透,
+        success: res => {}
+      });
+      return;
       orderPay({
         "order_number": this.order_number
       }).then(res=>{

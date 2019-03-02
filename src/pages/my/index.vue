@@ -7,7 +7,7 @@
 
     <open-data type="userGender" lang="zh_CN"></open-data>
 
-    <button open-type="feedback">有什么要吐槽的？</button>
+    <!-- <button open-type="feedback">有什么要吐槽的？</button> -->
     <button @tap="callSomeOne(10086)">打电话给10086</button>
 
     <view>
@@ -19,7 +19,7 @@
         @change="bindChange"
       >
         <picker-view-column>
-          <view v-for="(item,index) in  " style="line-height: 50px">{{item}}年</view>
+          <view v-for="(item,index) in  years" style="line-height: 50px">{{item}}年</view>
         </picker-view-column>
         <picker-view-column>
           <view v-for="(item,index) in months" style="line-height: 50px">{{item}}月</view>
